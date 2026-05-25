@@ -8,7 +8,7 @@ pipeline {
 
             steps {
 
-                bat 'docker-compose build'
+                sh 'docker-compose build'
 
             }
 
@@ -18,7 +18,7 @@ pipeline {
 
             steps {
 
-                bat 'docker-compose down'
+                sh 'docker-compose down'
 
             }
 
@@ -28,7 +28,7 @@ pipeline {
 
             steps {
 
-                bat 'docker-compose up -d'
+                sh 'docker-compose up -d'
 
             }
 
