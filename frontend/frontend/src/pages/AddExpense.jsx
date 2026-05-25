@@ -13,7 +13,7 @@ function AddExpense() {
     try {
 
       const response = await fetch(
-        "finance-backend-cwm9.onrender.com/add-expense",
+        "https://finance-backend-cwm9.onrender.com/add-expense",
         {
 
           method: "POST",
