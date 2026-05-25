@@ -18,7 +18,7 @@ function ExpenseHistory() {
     try {
 
       const response = await fetch(
-        "https://finance-backend-cwm9.onrender.com"
+        "https://finance-backend-cwm9.onrender.com/expenses"
       );
 
       const data = await response.json();
