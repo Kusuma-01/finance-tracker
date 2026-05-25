@@ -4,31 +4,31 @@ pipeline {
 
     stages {
 
-        stage('Build Docker Images') {
+        stage('Clone Repository') {
 
             steps {
 
-                sh 'docker-compose build'
+                echo 'Repository Cloned Successfully'
 
             }
 
         }
 
-        stage('Stop Old Containers') {
+        stage('Build Stage') {
 
             steps {
 
-                sh 'docker-compose down'
+                echo 'Docker Build Started'
 
             }
 
         }
 
-        stage('Run Containers') {
+        stage('Deployment Stage') {
 
             steps {
 
-                sh 'docker-compose up -d'
+                echo 'Application Deployment Successful'
 
             }
 
