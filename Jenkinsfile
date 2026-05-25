@@ -4,17 +4,17 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
+        stage('Testing') {
 
             steps {
 
-                echo 'Repository Cloned Successfully'
+                echo 'Running Test Cases'
 
             }
 
         }
 
-        stage('Build Stage') {
+        stage('Build') {
 
             steps {
 
@@ -24,7 +24,7 @@ pipeline {
 
         }
 
-        stage('Deployment Stage') {
+        stage('Deploy') {
 
             steps {
 
