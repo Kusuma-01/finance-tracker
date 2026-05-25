@@ -35,7 +35,7 @@ function Savings() {
     );
 
     const response = await fetch(
-      `http://127.0.0.1:5000/savings/${user.id}`
+      `https://finance-backend-cwm9.onrender.com/savings/${user.id}`
     );
 
     const result = await response.json();

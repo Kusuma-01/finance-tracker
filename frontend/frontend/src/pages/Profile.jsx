@@ -53,7 +53,7 @@ function Profile() {
     );
 
     const response = await fetch(
-      `finance-backend-cwm9.onrender.com/update-profile/${user.id}`,
+      `https://finance-backend-cwm9.onrender.com/update-profile/${user.id}`,
       {
 
         method: "PUT",

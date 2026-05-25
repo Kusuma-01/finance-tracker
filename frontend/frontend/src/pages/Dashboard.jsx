@@ -34,7 +34,7 @@ function Dashboard() {
     try {
 
       const response = await fetch(
-        "finance-backend-cwm9.onrender.com/predict"
+        "https://finance-backend-cwm9.onrender.com/predict"
       );
 
       const result = await response.json();

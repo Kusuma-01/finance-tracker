@@ -55,7 +55,7 @@ function Analytics() {
     try {
 
       const response = await fetch(
-        "finance-backend-cwm9.onrender.com/analytics"
+        "https://finance-backend-cwm9.onrender.com/analytics"
       );
 
       const data = await response.json();
