@@ -1,5 +1,5 @@
 flask
+flask-cors
 numpy
 scikit-learn
 joblib
-flask-cors

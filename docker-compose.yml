@@ -1,14 +1,22 @@
-version: "3"
-
 services:
+
   backend:
+
     build: ./backend
+
     ports:
       - "5000:5000"
 
+    container_name: finance-backend
+
   frontend:
+
     build: ./frontend/frontend
+
     ports:
       - "5173:5173"
+
+    container_name: finance-frontend
+
     depends_on:
       - backend

@@ -1,84 +1,75 @@
-import { useState } from "react";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from "chart.js";
-import { Bar } from "react-chartjs-2";
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+
+import Dashboard from "./pages/Dashboard";
+import AddExpense from "./pages/AddExpense";
+import Analytics from "./pages/Analytics";
+import Savings from "./pages/Savings";
+import ExpenseHistory from "./pages/ExpenseHistory";
+import Profile from "./pages/Profile";
 
 function App() {
-  const [amount, setAmount] = useState("");
-  const [expenses, setExpenses] = useState([]);
-  const [prediction, setPrediction] = useState(null);
-
-  const addExpense = async () => {
-    await fetch("http://127.0.0.1:5000/add-expense", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ amount: parseFloat(amount) }),
-    });
-
-    setExpenses([...expenses, amount]);
-    setAmount("");
-  };
-
-  const getPrediction = async () => {
-    const res = await fetch("http://127.0.0.1:5000/predict");
-    const data = await res.json();
-    setPrediction(data.predicted_spending);
-  };
-
-  const data = {
-    labels: expenses.map((_, i) => `Expense ${i + 1}`),
-    datasets: [
-      {
-        label: "Expenses",
-        data: expenses,
-      },
-    ],
-  };
 
   return (
-    <div style={{ fontFamily: "Arial", padding: "30px" }}>
-      <h1 style={{ textAlign: "center" }}>💰 AI Finance Tracker</h1>
 
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <input
-          type="number"
-          value={amount}
-          placeholder="Enter amount"
-          onChange={(e) => setAmount(e.target.value)}
-          style={{ padding: "10px", width: "200px" }}
+    <BrowserRouter>
+
+      <Routes>
+
+        {/* Authentication */}
+
+        <Route
+          path="/"
+          element={<Login />}
         />
-        <button onClick={addExpense} style={{ marginLeft: "10px", padding: "10px" }}>
-          Add
-        </button>
-      </div>
 
-      <div style={{ textAlign: "center" }}>
-        <button onClick={getPrediction} style={{ padding: "10px 20px" }}>
-          Predict Spending
-        </button>
-      </div>
+        <Route
+          path="/signup"
+          element={<Signup />}
+        />
 
-      {prediction && (
-        <h2 style={{ textAlign: "center", marginTop: "20px" }}>
-          📊 Predicted: {prediction}
-        </h2>
-      )}
+        {/* Main App */}
 
-      <div style={{ width: "60%", margin: "auto", marginTop: "40px" }}>
-        <Bar data={data} />
-      </div>
-    </div>
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/add"
+          element={<AddExpense />}
+        />
+
+        <Route
+          path="/analytics"
+          element={<Analytics />}
+        />
+
+        <Route
+          path="/savings"
+          element={<Savings />}
+        />
+
+        <Route
+          path="/history"
+          element={<ExpenseHistory />}
+        />
+
+        <Route
+          path="/profile"
+          element={<Profile />}
+        />
+
+      </Routes>
+
+    </BrowserRouter>
+
   );
 }
 
