@@ -29,7 +29,7 @@ function Profile() {
       );
 
       const response = await fetch(
-        `http://127.0.0.1:5000/profile/${user.id}`
+        `https://finance-backend-cwm9.onrender.com`
       );
 
       const data = await response.json();
@@ -53,7 +53,7 @@ function Profile() {
     );
 
     const response = await fetch(
-      `http://127.0.0.1:5000/update-profile/${user.id}`,
+      `finance-backend-cwm9.onrender.com/update-profile/${user.id}`,
       {
 
         method: "PUT",

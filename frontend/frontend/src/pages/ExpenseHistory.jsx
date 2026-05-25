@@ -18,7 +18,7 @@ function ExpenseHistory() {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:5000/expenses"
+        "https://finance-backend-cwm9.onrender.com"
       );
 
       const data = await response.json();
@@ -39,7 +39,7 @@ function ExpenseHistory() {
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:5000/delete-expense/${id}`,
+        `finance-backend-cwm9.onrender.com/delete-expense/${id}`,
         {
 
           method: "DELETE"
