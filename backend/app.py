@@ -284,6 +284,62 @@ def analytics():
     return jsonify(category_data)
 
 
+# ---------------- UPDATE BUDGET ---------------- #
+
+@app.route('/update-budget/<int:user_id>', methods=['PUT'])
+def update_budget(user_id):
+
+    connection = None
+
+    try:
+
+        data = request.json
+
+        budget = float(data['budget_limit'])
+
+        connection = sqlite3.connect(
+            "database.db",
+            timeout=10
+        )
+
+        cursor = connection.cursor()
+
+        cursor.execute("""
+        UPDATE users
+        SET budget_limit=?
+        WHERE id=?
+        """, (
+            budget,
+            user_id
+        ))
+
+        connection.commit()
+
+        return jsonify({
+
+            "message":
+            "Budget Updated Successfully",
+
+            "budget_limit":
+            budget
+
+        })
+
+    except Exception as e:
+
+        if connection:
+            connection.rollback()
+
+        return jsonify({
+
+            "error": str(e)
+
+        }), 500
+
+    finally:
+
+        if connection:
+            connection.close()
 # ---------------- PREDICTION ---------------- #
 
 @app.route('/predict', methods=['GET'])
