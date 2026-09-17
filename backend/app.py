@@ -402,48 +402,51 @@ def predict():
 
 # ---------------- PROFILE ---------------- #
 
-@app.route('/profile/<int:user_id>',
-methods=['GET'])
-
+@app.route('/profile/<int:user_id>', methods=['GET'])
 def get_profile(user_id):
 
-    connection = sqlite3.connect(
-        "database.db",
-        check_same_thread=False
-    )
+    connection = None
 
-    cursor = connection.cursor()
+    try:
 
-    cursor.execute("""
+        connection = sqlite3.connect(
+            "database.db",
+            timeout=10
+        )
 
-    SELECT name,email,income
-    FROM users
+        cursor = connection.cursor()
 
-    WHERE id=?
+        cursor.execute("""
+        SELECT name, email, income, budget_limit
+        FROM users
+        WHERE id=?
+        """, (user_id,))
 
-    """, (user_id,))
+        user = cursor.fetchone()
 
-    user = cursor.fetchone()
+        if user:
 
-    connection.close()
-
-    if user:
+            return jsonify({
+                "name": user[0],
+                "email": user[1],
+                "income": user[2],
+                "budget_limit": user[3]
+            })
 
         return jsonify({
+            "error": "User not found"
+        }), 404
 
-            "name": user[0],
+    except Exception as e:
 
-            "email": user[1],
+        return jsonify({
+            "error": str(e)
+        }), 500
 
-            "income": user[2]
+    finally:
 
-        })
-
-    return jsonify({
-
-        "error": "User not found"
-
-    }), 404
+        if connection:
+            connection.close()
 
 # ---------------- UPDATE PROFILE ---------------- #
 
