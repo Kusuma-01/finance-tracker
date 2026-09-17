@@ -10,7 +10,9 @@ function Profile() {
 
     email: "",
 
-    income: ""
+    income: "",
+
+    budget_limit: ""
 
   });
 
@@ -46,59 +48,133 @@ function Profile() {
 
   const updateProfile = async () => {
 
-  try {
+    try {
 
-    const user = JSON.parse(
-      localStorage.getItem("user")
-    );
-
-    const response = await fetch(
-      `https://finance-backend-cwm9.onrender.com/update-profile/${user.id}`,
-      {
-
-        method: "PUT",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body: JSON.stringify(profile)
-
-      }
-    );
-
-    const data = await response.json();
-
-    if (response.ok) {
-
-      alert(data.message);
-
-      // Update localStorage
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-
-          ...user,
-
-          ...profile
-
-        })
+      const user = JSON.parse(
+        localStorage.getItem("user")
       );
 
-    } else {
+      const response = await fetch(
+        `https://finance-backend-cwm9.onrender.com/update-profile/${user.id}`,
+        {
 
-      alert(data.error);
+          method: "PUT",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+
+            name: profile.name,
+
+            email: profile.email,
+
+            income: profile.income
+
+          })
+
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        alert(data.message);
+
+        // Update localStorage
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+
+            ...user,
+
+            ...profile
+
+          })
+        );
+
+      } else {
+
+        alert(data.error);
+
+      }
+
+    } catch (error) {
+
+      console.log(error);
 
     }
 
-  } catch (error) {
+  };
 
-    console.log(error);
+  // ---------------- UPDATE BUDGET ---------------- //
 
-  }
+  const updateBudget = async () => {
 
-};
+    try {
+
+      const user = JSON.parse(
+        localStorage.getItem("user")
+      );
+
+      const response = await fetch(
+        `https://finance-backend-cwm9.onrender.com/update-budget/${user.id}`,
+        {
+
+          method: "PUT",
+
+          headers: {
+
+            "Content-Type":
+              "application/json"
+
+          },
+
+          body: JSON.stringify({
+
+            budget_limit:
+              profile.budget_limit
+
+          })
+
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        alert(data.message);
+
+        // Update localStorage
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+
+            ...user,
+
+            budget_limit:
+              profile.budget_limit
+
+          })
+        );
+
+      } else {
+
+        alert(data.error);
+
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
 
   return (
 
@@ -129,8 +205,8 @@ function Profile() {
 
               {
                 profile.name
-                ?.charAt(0)
-                ?.toUpperCase()
+                  ?.charAt(0)
+                  ?.toUpperCase()
               }
 
             </div>
@@ -210,13 +286,45 @@ function Profile() {
             style={inputStyle}
           />
 
-          {/* Button */}
+          {/* Budget Limit */}
+
+          <label style={labelStyle}>
+            Monthly Budget Limit
+          </label>
+
+          <input
+            type="number"
+            value={profile.budget_limit}
+            onChange={(e) =>
+              setProfile({
+
+                ...profile,
+
+                budget_limit:
+                  e.target.value
+
+              })
+            }
+            style={inputStyle}
+            placeholder="Enter your monthly budget"
+          />
+
+          {/* Update Profile Button */}
 
           <button
             onClick={updateProfile}
             style={buttonStyle}
           >
             Update Profile
+          </button>
+
+          {/* Update Budget Button */}
+
+          <button
+            onClick={updateBudget}
+            style={buttonStyle}
+          >
+            Update Budget
           </button>
 
         </div>
@@ -315,7 +423,7 @@ const buttonStyle = {
 
   borderRadius: "12px",
 
-  marginTop: "25px",
+  marginTop: "15px",
 
   fontSize: "18px",
 
