@@ -24,27 +24,35 @@ function Profile() {
 
   const fetchProfile = async () => {
 
-    try {
+  try {
 
-      const user = JSON.parse(
-        localStorage.getItem("user")
-      );
+    const user = JSON.parse(
+      localStorage.getItem("user")
+    );
 
-      const response = await fetch(
-        `https://finance-backend-cwm9.onrender.com`
-      );
+    const response = await fetch(
+      `https://finance-backend-cwm9.onrender.com/profile/${user.id}`
+    );
 
-      const data = await response.json();
+    const data = await response.json();
+
+    if (response.ok) {
 
       setProfile(data);
 
-    } catch (error) {
+    } else {
 
-      console.log(error);
+      console.log(data.error);
 
     }
 
-  };
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
 
   const updateProfile = async () => {
 
